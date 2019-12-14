@@ -1,29 +1,22 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    service: reverseproxy
-  name: reverseproxy
+  name: udagram-reverseproxy
 spec:
-  replicas: 1
+  selector:
+    matchLabels:
+      app: udagram-reverseproxy
   template:
     metadata:
       labels:
-        service: reverseproxy
+        app: udagram-reverseproxy
     spec:
       containers:
-      - image: stevecarrupt/udagram-reverseproxy
-        name: reverseproxy
-        imagePullPolicy: Always          
+      - name: udagram-reverseproxy
+        image: deeamps/udagram-reverseproxy:latest
         resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
           limits:
-            memory: "1024Mi"
-            cpu: "500m"       
+            memory: "128Mi"
+            cpu: "50m"
         ports:
-        - containerPort: 8080
-      restartPolicy: Always
-
-
+        - containerPort: 80
