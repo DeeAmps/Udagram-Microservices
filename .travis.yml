@@ -22,7 +22,7 @@ deploy:
   - provider: script
     script: bash deployment/docker/publish.sh
     on:
-      branch: master
+      branch: dev
   - provider: script
     script: bash deployment/k8s/deploy.sh
     on:

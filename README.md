@@ -21,7 +21,7 @@ Furthermore, you need to have:
 Clone the repository on your local machine:
 
 ```
-git clone git@github.com:scarrupt/udagram.git
+git clone https://github.com/DeeAmps/Udagram-Microservices.git
 ```
 
 ### Create an S3 bucket
@@ -85,7 +85,7 @@ POSTGRESS_USERNAME=udagram
 POSTGRESS_PASSWORD=local
 POSTGRESS_DB=udagram
 POSTGRESS_HOST=db
-WT_SECRET=mySecret
+JWT_SECRET=mySecret
 AWS_BUCKET=__YOUR_AWS_BUCKET_NAME__
 AWS_REGION=__YOUR_AWS_BUCKET_REGION__
 AWS_PROFILE=__YOUR_AWS_PROFILE__
@@ -96,7 +96,7 @@ Replace the variables `__YOUR_AWS_BUCKET_NAME__`, `__YOUR_AWS_BUCKET_REGION__` a
 Build the images by running:
 
 ```
-docker-compose -f docker-compose-build.yaml build --parallel
+docker-compose -f ./deployment/docker/docker-compose-dev.yaml
 ```
 
 Start the application and services:
