@@ -6,3 +6,6 @@ terraform.tfvars
 tf.json
 udagram-kubeconfig
 udagram.tar.gz
+runlocal.dev.sh
+env-configmap.yaml
+env-secret.yaml

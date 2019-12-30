@@ -30,7 +30,7 @@ variable "worker_os" {
 
 variable "ssh_public_key_file" {
   description = "SSH public key file"
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "/Users/mac/Downloads/udagram.pub"
 }
 
 variable "ssh_port" {
@@ -45,7 +45,7 @@ variable "ssh_username" {
 
 variable "ssh_private_key_file" {
   description = "SSH private key file used to access instances"
-  default     = ""
+  default     = "/Users/mac/Downloads/udagram.pem"
 }
 
 variable "ssh_agent_socket" {
