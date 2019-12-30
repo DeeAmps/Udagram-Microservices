@@ -1,43 +1,40 @@
 version: "3"
-
-volumes:
-  db-data:
 services:
   udagram-reverseproxy:
-      image: deeamps/udagram-reverseproxy
+      image: deeamps/udagram-reverseproxy:alpha
       ports:
-          - 8000:8000
+          - 8080:8080
       restart: always
       depends_on:
         - udagram-user-service
-        - udagram-feed-service     
+        - udagram-feed-service  
   udagram-user-service:
-    image: deeamps/udagram-user-service:latest
+    image: deeamps/udagram-user-service:alpha
     environment:
-      POSTGRESS_USERNAME: $POSTGRES_USERNAME
-      POSTGRESS_PASSWORD: $POSTGRES_PASSWORD 
-      POSTGRESS_DB: $POSTGRES_DB 
-      POSTGRESS_HOST: $POSTGRESS_HOST
-      AWS_REGION: $AWS_REGION
-      AWS_PROFILE: $AWS_PROFILE
-      AWS_MEDIA_BUCKET: $AWS_MEDIA_BUCKET
-      UDAGRAM_MEDIA_BUCKET: $UDAGRAM_MEDIA_BUCKET
-      JWT_SECRET_SECRET: $JWT_SECRET_SECRET
+      POSTGRESS_USERNAME: $POSTGRESS_USERNAME
+      POSTGRESS_PASSWORD: $POSTGRESS_PASSWORD 
+      POSTGRESS_DB: $POSTGRESS_DB 
+      POSTGRESS_HOST: $POSTGRESS_HOST 
+      AWS_REGION: $AWS_REGION 
+      AWS_PROFILE: $AWS_PROFILE 
+      AWS_BUCKET: $AWS_BUCKET
+      JWTSECRET: $JWTSECRET
+      URL: "http://localhost:8100"
   udagram-feed-service:
-    image: deeamps/udagram-feed-service:latest
+    image: deeamps/udagram-feed-service:alpha
     volumes:
       - $HOME/.aws:/root/.aws
     environment:
-      POSTGRESS_USERNAME: $POSTGRES_USERNAME
-      POSTGRESS_PASSWORD: $POSTGRES_PASSWORD 
-      POSTGRESS_DB: $POSTGRES_DB 
-      POSTGRESS_HOST: $POSTGRESS_HOST
-      AWS_REGION: $AWS_REGION
-      AWS_PROFILE: $AWS_PROFILE
-      AWS_MEDIA_BUCKET: $AWS_MEDIA_BUCKET
-      UDAGRAM_MEDIA_BUCKET: $UDAGRAM_MEDIA_BUCKET
-      JWT_SECRET_SECRET: $JWT_SECRET_SECRET
-  frontend:
-    image: deeamps/udagram-frontend
+      POSTGRESS_USERNAME: $POSTGRESS_USERNAME
+      POSTGRESS_PASSWORD: $POSTGRESS_PASSWORD 
+      POSTGRESS_DB: $POSTGRESS_DB 
+      POSTGRESS_HOST: $POSTGRESS_HOST 
+      AWS_REGION: $AWS_REGION 
+      AWS_PROFILE: $AWS_PROFILE 
+      AWS_BUCKET: $AWS_BUCKET
+      JWTSECRET: $JWTSECRET
+      URL: "http://localhost:8100"
+  udagram-frontend:
+    image: deeamps/udagram-frontend:alpha
     ports:
       - "8100:80"

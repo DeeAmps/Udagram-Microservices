@@ -16,7 +16,6 @@ limitations under the License.
 
 variable "cluster_name" {
   description = "Name of the cluster"
-  default="udagram"
 }
 
 variable "worker_os" {
@@ -31,7 +30,7 @@ variable "worker_os" {
 
 variable "ssh_public_key_file" {
   description = "SSH public key file"
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "/Users/mac/Downloads/udagram.pub"
 }
 
 variable "ssh_port" {
@@ -46,7 +45,7 @@ variable "ssh_username" {
 
 variable "ssh_private_key_file" {
   description = "SSH private key file used to access instances"
-  default     = ""
+  default     = "/Users/mac/Downloads/udagram.pem"
 }
 
 variable "ssh_agent_socket" {
@@ -57,7 +56,7 @@ variable "ssh_agent_socket" {
 # Provider specific settings
 
 variable "aws_region" {
-  default     = "us-east-2"
+  default     = "eu-west-3"
   description = "AWS region to speak to"
 }
 
@@ -67,17 +66,17 @@ variable "vpc_id" {
 }
 
 variable "control_plane_type" {
-  default     = "t2.micro"
+  default     = "t3.medium"
   description = "AWS instance type"
 }
 
 variable "control_plane_volume_size" {
-  default     = 8
+  default     = 100
   description = "Size of the EBS volume, in Gb"
 }
 
 variable "worker_type" {
-  default     = "t2.micro"
+  default     = "t3.medium"
   description = "instance type for workers"
 }
 

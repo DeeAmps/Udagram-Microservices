@@ -1,0 +1,18 @@
+version: "3"
+services:
+  udagram-reverseproxy:
+    build:
+      context: ../../proxy
+    image: deeamps/udagram-reverseproxy:alpha 
+  udagram-user-service:
+    build:
+      context: ../../user-service
+    image: deeamps/udagram-user-service:alpha 
+  udagram-feed-service:
+    build:
+      context: ../../feed-service
+    image: deeamps/udagram-feed-service:alpha 
+  udagram-frontend:
+    build:
+      context: ../../frontend
+    image: deeamps/udagram-frontend:alpha 

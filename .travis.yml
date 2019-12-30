@@ -20,10 +20,10 @@ install:
 
 deploy:
   - provider: script
-    script: bash deployment/docker/publish.sh
+    script: bash deployment/scripts/publish.sh
     on:
       branch: dev
   - provider: script
-    script: bash deployment/k8s/deploy.sh
+    script: bash deployment/scripts/deploy.sh
     on:
       branch: master

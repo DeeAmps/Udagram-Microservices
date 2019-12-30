@@ -22,7 +22,7 @@ async function comparePasswords(plainTextPassword: string, hash: string): Promis
 }
 
 function generateJWT(user: User): string {
-    return jwt.sign(user, process.env.JWTSECRET);
+    return jwt.sign(user.dataValues, process.env.JWTSECRET);
 }
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {

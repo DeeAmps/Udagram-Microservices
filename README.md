@@ -34,22 +34,24 @@ Save the following policy in the Bucket policy editor:
 
 ```JSON
 {
- "Version": "2012-10-17",
- "Id": "Policy1565786082197",
- "Statement": [
- {
- "Sid": "Stmt1565786073670",
- "Effect": "Allow",
- "Principal": {
- "AWS": "__YOUR_USER_ARN__"
- },
- "Action": [
- "s3:GetObject",
- "s3:PutObject"
- ],
- "Resource": "__YOUR_BUCKET_ARN__/*"
- }
- ]
+    "Id": "Policy1577007815117",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1577007805981",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Effect": "Allow",
+            "Resource": "__YOUR _USER_ARN__",
+            "Principal": {
+                "AWS": [
+                    "__YOUR _USER_ARN__"
+                ]
+            }
+        }
+    ]
 }
 ```
 Modify the variables `__YOUR_USER_ARN__` and `__YOUR_BUCKET_ARN__` by your own data.
@@ -122,7 +124,7 @@ AWS_ACCESS_KEY_ID=__YOUR_AWS_ACCES_KEY_ID__
 AWS_SECRET_ACCESS_KEY=__YOUR_AWS_SECRET_ACCESS_KEY__
 ```
 
-Move to the directory `deployment/k8s/infrastructure` and run the following command:
+Move to the directory `deployment/infrastructure` and run the following command:
 
 ```
 terraform init
@@ -300,33 +302,3 @@ Run the script:
 ```
 
 Application, services, and container logs are now sent to CloudWatch.
-
-### Deploy a canary version of your application
-
-2 versions of the application can be run on parallel for A/B Testing.
-
-Checkout the V2 branch by:
-
-```
-git checkout -b V2
-```
-
-Add the tag V2 on the frontend image in your Docker production build file and build it:
-
-```
-docker-compose -f __YOUR_DOCKER_BUILD_FILE__ build --parallel
-```
-
-Push the V2 frontend image to your Docker Hub
-
-```
-docker-compose -f __YOUR_DOCKER_BUILD_FILE__ push
-```
-
-Deploy the V2 frontend in Kubernetes
-
-```
-kubectl -f deployment/k8s/frontend-canary-deployment.yaml
-```
-
-Voilà. The load balancer will route some traffic to the version 2

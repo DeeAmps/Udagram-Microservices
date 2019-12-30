@@ -1,54 +1,80 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udagram-feed-service
+  name: backend-feed
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: udagram-feed-service
+      service: backend-feed
   template:
     metadata:
       labels:
-        app: udagram-feed-service
+        service: backend-feed
     spec:
       containers:
-      - name: udagram-feed-service
-        image: deeamps/udagram-feed-service:latest
+      - image: deeamps/udagram-feed-service:alpha
+        name: backend-feed
+        imagePullPolicy: Always  
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "1024Mi"
+            cpu: "200m"                  
         env:
-        - name: POSTGRESS_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: POSTGRESS_PASSWORD
-        - name: POSTGRESS_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: POSTGRESS_USERNAME
         - name: URL
           valueFrom:
             configMapKeyRef:
               name: env-config
               key: URL
-        - name: JWT_SECRET
+        - name: AWS_BUCKET
           valueFrom:
             configMapKeyRef:
               name: env-config
-              key: JWT_SECRET
-        - name: POSTGRESS_DATABASE
+              key: AWS_BUCKET
+        - name: AWS_PROFILE
           valueFrom:
             configMapKeyRef:
               name: env-config
-              key: POSTGRESS_DATABASE
+              key: AWS_PROFILE
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_REGION
+        - name: JWTSECRET
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: JWTSECRET
+        - name: POSTGRESS_DB
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: POSTGRESS_DB
         - name: POSTGRESS_HOST
           valueFrom:
             configMapKeyRef:
               name: env-config
               key: POSTGRESS_HOST
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "50m"
-        ports:
-        - containerPort: 8082
-        
+        - name: POSTGRESS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRESS_PASSWORD
+        - name: POSTGRESS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRESS_USERNAME      
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true        
+      restartPolicy: Always
+      volumes:
+      - name: aws-secret
+        secret:
+          secretName: aws-secret       
